@@ -1,0 +1,52 @@
+version: '3.1'
+
+services:
+
+  invoice-generator:
+    image: masa1337/chmury_invoice:0.0.1
+    restart: unless-stopped
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SQS.ADDRESS=sqs
+    depends_on:
+      - db
+      - sqs
+      - skiecommenrce-backed
+    ports:
+      - "8090:8090"
+
+  skiecommenrce-backed:
+    image: masa1337/chmury_backend:0.0.1
+    restart: unless-stopped
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING.JPA.HIBERNATE.DDL-AUTO=none
+      - HIBERNATE.DIALEC=org.hibernate.dialect.PostgreSQLDialect
+      - SQS.ADDRESS=sqs
+    depends_on:
+      - db
+      - sqs
+    ports:
+      - "8888:8888"
+
+  db:
+    container_name: db
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    ports:
+      - "5432:5432"
+
+  sqs:
+    container_name: sqs
+    image: s12v/elasticmq
+    ports:
+      - "9324:9324"
+    volumes:
+      - ./skiecommenrce-backed/src/main/resources/sqs/elasticmq.conf:/etc/elasticmq/elasticmq.conf

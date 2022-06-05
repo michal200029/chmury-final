@@ -1,0 +1,39 @@
+<!-- MENU SIDEBAR-->
+<div class="page-wrapper">
+    <aside class="menu-sidebar d-none d-lg-block">
+        <div class="logo">
+            <a routerLink="/products">
+                <img src="assets/images/LOGO.PNG" alt="skishop" class="img-responsive" style="width: 300px">
+            </a>
+        </div>
+        <app-product-menu></app-product-menu>
+    </aside>
+    <div class="page-container">
+        <!-- HEADER DESKTOP-->
+        <header class="header-desktop">
+            <div class="section-content section-content-p30">
+                <div class="container-fluid">
+                    <div class="header-wrap">
+                        <div>
+                            <a routerLink="/login" style="margin: 8px;" *ngIf="!isLoggedIn">
+                                Login
+                            </a>
+                            <a routerLink="/register" *ngIf="!isLoggedIn">
+                                Register
+                            </a>
+                            <a *ngIf="isLoggedIn" href class="nav-link" (click)="logout()">
+                                Log out
+                            </a>
+                        </div>
+                        <a routerLink="/cartDetails">
+                            <app-cart-info></app-cart-info>
+                        </a>
+                    </div>
+                    <div class="account-wrap"></div>
+                </div>
+            </div>
+        </header>
+        <!-- MAIN -->
+        <router-outlet></router-outlet>
+    </div>
+</div>

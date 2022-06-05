@@ -1,0 +1,10 @@
+# dependencies
+angular-skiecommerce/node_modules
+
+skiecommenrce-backed/target
+skiecommenrce-backed/src
+skiecommenrce-backed/.idea
+
+invoice-generator/target
+invoice-generato/src
+invoice-generato/.idea

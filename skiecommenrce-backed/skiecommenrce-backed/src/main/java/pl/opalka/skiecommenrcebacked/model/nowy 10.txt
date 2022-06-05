@@ -1,0 +1,69 @@
+LOAD CSV WITH HEADERS FROM 'file:///zeszyt.csv' AS line
+FIELDTERMINATOR ';'
+
+MERGE (f1:Flight { 
+flight_id: line.flight_id, 
+aircraft_type: line.aircraft_type, 
+airline_company: line.airline_company,
+arrival_time_utc: line.arrival_time_utc,
+boarding_time_utc: line.boarding_time_utc,
+departue_time_utc: line.departue_time_utc,
+flight_nb: line.flight_nb,
+flight_status: line.flight_status,
+flight_time: line.flight_time
+})
+
+MERGE (f2:Flight { 
+flight_id: line.flight_id, 
+aircraft_type: line.aircraft_type, 
+airline_company: line.airline_company,
+arrival_time_utc: line.arrival_time_utc,
+boarding_time_utc: line.boarding_time_utc,
+departue_time_utc: line.departue_time_utc,
+flight_nb: line.flight_nb,
+flight_status: line.flight_status,
+flight_time: line.flight_time
+})
+
+MERGE (f3:Flight { 
+flight_id: line.flight_id, 
+aircraft_type: line.aircraft_type, 
+airline_company: line.airline_company,
+arrival_time_utc: line.arrival_time_utc,
+boarding_time_utc: line.boarding_time_utc,
+departue_time_utc: line.departue_time_utc,
+flight_nb: line.flight_nb,
+flight_status: line.flight_status,
+flight_time: line.flight_time
+})
+
+
+MERGE (a1:Airport {
+airport_id: line.airport_id,
+location_code: line.location_code,
+location_name: line.location_name,
+country: line.country,
+city_name: line.city_name})
+
+MERGE (a2:Airport {
+airport_id: line.airport_id,
+location_code: line.location_code,
+location_name: line.location_name,
+country: line.country,
+city_name: line.city_name})
+
+MERGE (a3:Airport {
+airport_id: line.airport_id,
+location_code: line.location_code,
+location_name: line.location_name,
+country: line.country,
+city_name: line.city_name})
+
+MERGE (f1)-[:FROM]->(a1)
+MERGE (f1)-[:TO]->(a2)
+
+MERGE (f2)-[:FROM]->(a1)
+MERGE (f2)-[:TO]->(a3)
+
+MERGE (f3)-[:FROM]->(a2)
+MERGE (f4)-[:TO]->(a1)

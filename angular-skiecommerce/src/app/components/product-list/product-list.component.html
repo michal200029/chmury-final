@@ -1,0 +1,29 @@
+<div class="main-container">
+    <div class="secetion-content sectiont-content-p3">
+        <div class="container-fluid">
+            <div class="row" style="padding-top:85px">
+
+
+                <div *ngFor="let i of products" class="col-md-3">
+
+                    <div class="product-box" >
+                        <div appDetails [product]="i"  [categoryId]="currentCategoryId">
+                                <img src="{{ i.imageUrl }}" class="img-responsive"> 
+                        </div>
+                                <h1>Brand: {{ i.brand }} </h1>
+                                <h1>Model: {{ i.name }}</h1>
+                                <h1>Condition: {{ i.condition }}</h1>
+                                <h1>Size: {{ i.size }}</h1>
+                                
+                        <div class="price ">{{ i.unitPrice | currency: 'PLN '}}</div>
+                        <button (click)="addToCart(i)" class="btn btn-primary btn-sm">Add to cart</button>
+                    </div>
+                </div>
+
+                <div *ngIf="products.length==0" class="alert alert-warning col-md-12" role="alert">
+                    No products found.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
